@@ -1,0 +1,23 @@
+
+# Xcode / clang build artifacts
+*.dSYM
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.exe
+
+# Build products
+life
+/build/
+/bin/
+/obj/
+
+# Xcode user data (if applicable)
+DerivedData/
+*.xcuserdatad
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+``
