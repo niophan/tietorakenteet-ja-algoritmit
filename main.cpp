@@ -16,7 +16,8 @@ Uses: The class Life and its methods initialize(), print(), and update().
 
 {
    Life configuration;
-   instructions();
+   instructions(configuration.get_maxrow(), configuration.get_maxcol());
+   configuration.set_dimensions();
    configuration.initialize();
    configuration.print();
    cout << "Continue viewing new generations? " << endl;

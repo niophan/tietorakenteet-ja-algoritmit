@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void instructions()
+void instructions(int maxrow, int maxcol)
 /*
 Pre:  None.
 Post: Instructions for using the Life program have been printed.
