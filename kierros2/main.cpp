@@ -26,4 +26,5 @@ Uses: The class Life and its methods initialize(), print(), and update().
       configuration.print();
       cout << "Continue viewing new generations? " << endl;
    }
+   configuration.save_to_file();
 }

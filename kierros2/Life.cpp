@@ -112,22 +112,26 @@ Post: The Life object contains a configuration specified by the user.
       string fileConfig;
       ifstream MyFile("configuration.txt");
       int row = 1;
-      while(getline(MyFile, fileConfig) && row <= maxrow) {
-         if (fileConfig.length() >= 2 && fileConfig.substr(0, 2) == "//") {
-            continue;
-         }
-         if (fileConfig == "p" || fileConfig == "P") {
-            break;
-         }
-         for (int col = 1; col <= maxcol; col++) {
-            if (col <= fileConfig.length()) {
-               char c = fileConfig[col - 1];
-               grid[row][col] = (c == 'x' || c == 'X') ? 1 : 0;
-            } else {
-               grid[row][col] = 0;
+      if (MyFile.is_open()) {
+         while(getline(MyFile, fileConfig) && row <= maxrow) {
+            if (fileConfig.length() >= 2 && fileConfig.substr(0, 2) == "//") {
+               continue;
             }
-         }
-         row++;
+            if (fileConfig == "p" || fileConfig == "P") {
+               break;
+            }
+            for (int col = 1; col <= maxcol; col++) {
+               if (col <= fileConfig.length()) {
+                  char c = fileConfig[col - 1];
+                  grid[row][col] = (c == 'x' || c == 'X') ? 1 : 0;
+               } else {
+                  grid[row][col] = 0;
+               }
+            }
+            row++;
+         } 
+      } else {
+         cout << "Error: File cannot be opened" << endl;
       }
 
       MyFile.close();
@@ -210,4 +214,22 @@ Post: The configuration is written for the user.
       cout << endl;
    }
    cout << endl;
+}
+
+void Life::save_to_file()
+{
+   int row, col;
+   ofstream writeFile("configuration.txt");
+   if (writeFile.is_open()) {
+      for (row = 1; row <= maxrow; row++) {
+         for (col = 1; col <= maxcol; col++)
+            if (grid[row][col] == 1) writeFile.write("x", 1);
+            else writeFile.write("-", 1);
+         writeFile << endl;
+      }
+   writeFile.close();
+   cout << "The pattern is written to the configuration.txt" << endl;
+   } else {
+    cout << "Error: cannot opened the file" << endl;
+   }
 }
