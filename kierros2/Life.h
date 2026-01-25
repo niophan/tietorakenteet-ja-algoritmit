@@ -13,6 +13,7 @@ public:
    void print();
    void update();
    void save_to_file();
+   void animate();
    int get_maxrow() const { return maxrow; }
    int get_maxcol() const { return maxcol; }
 private:

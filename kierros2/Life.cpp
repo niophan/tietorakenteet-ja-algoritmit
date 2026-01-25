@@ -3,6 +3,8 @@
 #include <string>
 #include <limits>
 #include <fstream>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -232,4 +234,27 @@ void Life::save_to_file()
    } else {
     cout << "Error: cannot opened the file" << endl;
    }
+}
+
+void Life::animate()
+{
+   int delay, generations;
+   
+   cout << "Enter delay in seconds: ";
+   cin >> delay;
+   
+   cout << "Enter number of generations to simulate: ";
+   cin >> generations;
+   
+   for (int gen = 1; gen <= generations; gen++) {
+      cout << "Generation " << gen << endl;
+      print();
+      
+      if (gen < generations) {
+         this_thread::sleep_for(chrono::seconds(delay));
+      }
+      update();
+   }
+   
+   cout << "Animation finished!" << endl;
 }

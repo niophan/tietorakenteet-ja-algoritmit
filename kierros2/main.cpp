@@ -16,15 +16,40 @@ Uses: The class Life and its methods initialize(), print(), and update().
 
 {
    Life configuration;
+   char mode;
+   bool virhe = true;
    instructions(configuration.get_maxrow(), configuration.get_maxcol());
    configuration.set_dimensions();
    configuration.initialize();
    configuration.print();
-   cout << "Continue viewing new generations? " << endl;
-   while (user_says_yes()) {
-      configuration.update();
-      configuration.print();
-      cout << "Continue viewing new generations? " << endl;
-   }
+   
+   do {
+    virhe = false;
+    cout << "Choose mode to continue program:" << endl;
+    cout << "(A) Manual stepping (ask for each generation)" << endl;
+    cout << "(B) Animation (automatic with delay)" << endl;
+    cout << "Enter choice (A or B): ";
+    cin >> mode;
+
+    switch (mode)
+    {
+      case 'A': 
+      case 'a': while (user_says_yes()) {
+                      configuration.update();
+                      configuration.print();
+                      cout << "Continue viewing new generations? " << endl;
+                }
+                break;       
+      case 'B':
+      case 'b': configuration.animate();
+                break;                                
+      default : cout << "Invalid choice. Using manual mode." << endl;
+                while (user_says_yes()) {
+                      configuration.update();
+                      configuration.print();
+                      cout << "Continue viewing new generations? " << endl;
+                }
+    }
+  } while(virhe);
    configuration.save_to_file();
 }
