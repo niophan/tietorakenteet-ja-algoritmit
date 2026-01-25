@@ -1,0 +1,6 @@
+// Lightweight Spaceship
+0000000
+0xxxx00
+x000x00
+0000x00
+x000x00

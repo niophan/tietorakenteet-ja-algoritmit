@@ -2,6 +2,7 @@
 #include "Life.h"
 #include <string>
 #include <limits>
+#include <fstream>
 
 using namespace std;
 
@@ -104,39 +105,91 @@ Post: The Life object contains a configuration specified by the user.
 
 {
    int row, col;
+   char option;
+   bool virhe = true;
+
+   auto file = [&](){
+      string fileConfig;
+      ifstream MyFile("configuration.txt");
+      int row = 1;
+      while(getline(MyFile, fileConfig) && row <= maxrow) {
+         if (fileConfig.length() >= 2 && fileConfig.substr(0, 2) == "//") {
+            continue;
+         }
+         if (fileConfig == "p" || fileConfig == "P") {
+            break;
+         }
+         for (int col = 1; col <= maxcol; col++) {
+            if (col <= fileConfig.length()) {
+               char c = fileConfig[col - 1];
+               grid[row][col] = (c == 'x' || c == 'X') ? 1 : 0;
+            } else {
+               grid[row][col] = 0;
+            }
+         }
+         row++;
+      }
+
+      MyFile.close();
+   };
+
+   auto keyboard = [&]() {
+      cout << "---------------" << endl;
+      cout << "ATTENTION!" << endl;
+      cout << "---------------" << endl;
+      cout << "Use 'x' (or 'X') for occupied cells; blanks (or any other char) mean empty." << endl;
+      cout << "Extra characters beyond " << maxcol << " column are ignored; missing characters are treated as blanks." << endl;
+      cout << "Terminate the input with a single 'p' line to stop early; remaining rows become empty." << endl;
+      // Drop any leftover newline before using getline
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      string input;
+      for (int row = 1; row <= maxrow; row++) {
+         getline(cin, input);
+         if (!cin) {
+               input.clear();
+               cin.clear();
+         }
+         if (input == "p" || input == "P") {
+            break;
+         }
+         for (int col = 1; col <= maxcol; col++) {
+            if (col <= input.length()) {
+               char c = input[col - 1];
+               grid[row][col] = (c == 'x' || c == 'X') ? 1 : 0;
+            } else {
+               grid[row][col] = 0;
+            }
+         }
+      }
+   };
+
+
    for (row = 0; row <= maxrow+1; row++)
       for (col = 0; col <= maxcol+1; col++)
          grid[row][col] = 0;
    cout << "---------------" << endl;
-   cout << "ATTENTION!" << endl;
+   cout << "Please choose your option based on A or B:" << endl;
    cout << "---------------" << endl;
-   cout << "Use 'x' (or 'X') for occupied cells; blanks (or any other char) mean empty." << endl;
-   cout << "Extra characters beyond " << maxcol << " column are ignored; missing characters are treated as blanks." << endl;
-   cout << "Terminate the input with a single 'p' line to stop early; remaining rows become empty." << endl;
+   cout << "(A) Reading game initial configuration from the keyboard?" << endl;
+   cout << "(B) Or from the a file?" << endl;
 
-   // Drop any leftover newline before using getline
-   cin.ignore(numeric_limits<streamsize>::max(), '\n');
-   
-   string input;
+   do {
+    virhe = false;
+    cout << "Valitse (A) tai (B):";
+    cin >> option;
 
-   for (int row = 1; row <= maxrow; row++) {
-      getline(cin, input);
-      if (!cin) {
-            input.clear();
-            cin.clear();
-      }
-      if (input == "p" || input == "P") {
-         break;
-      }
-      for (int col = 1; col <= maxcol; col++) {
-         if (col <= input.length()) {
-            char c = input[col - 1];
-            grid[row][col] = (c == 'x' || c == 'X') ? 1 : 0;
-         } else {
-            grid[row][col] = 0;
-         }
-      }
-   }
+    switch (option)
+    {
+      case 'A' :  keyboard();
+                  break;       
+      case 'B' :  file();
+                  break;                                
+      default  :  cout << "Wrong input! Please type with a capital character again either A or B" << endl;   
+                  virhe = true;
+                  break; 
+    }
+  } while(virhe);
+
 }
  
 
@@ -153,7 +206,7 @@ Post: The configuration is written for the user.
    for (row = 1; row <= maxrow; row++) {
       for (col = 1; col <= maxcol; col++)
          if (grid[row][col] == 1) cout << 'x';
-         else cout << 'o';
+         else cout << '-';
       cout << endl;
    }
    cout << endl;
