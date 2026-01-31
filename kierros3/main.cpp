@@ -13,34 +13,29 @@ bool is_palindrome(const string& text) {
   return true;
 }
 
-
 int main( )
-/* Pre: The user supplies an integer n and n decimal numbers.
-Post: The numbers are printed in reverse order.
+/* Pre: The user supplies a line of text.
+Post: The characters are printed in reverse order.
 Uses: The STL class stack and its methods */
 {
-  int n;
-  char item;
-  string m;
-  stack<char> characters; // declares and initializes a stack of numbers
-  cout << " Type in an integer n followed by n decimal numbers." << endl
-        << " The text will be printed in reverse order." << endl;
-  cin >> n;
+  string text;
+  stack<char> characters; // declares and initializes a stack of characters
+  cout << " Type in a line of text." << endl
+        << " The characters will be printed in reverse order." << endl;
+  getline(cin, text);
 
-  for (int i = 0; i < n; i++) {
-    cin >> item;
-    characters.push(item);
-    m += item;
-  }
-
-  if(is_palindrome(m)) {
+  if(is_palindrome(text)) {
     cout << "Given string is a palindrome." << endl;
   } else {
     cout << "Given string is a normal text." << endl;
   }
+
+  for (int i = 0; i < text.length(); i++) {
+    characters.push(text[i]);
+  }
   cout << endl << endl;
   while (!characters.empty( )) {
-    cout << characters.top( ) << " ";
+    cout << characters.top( );
     characters.pop( );
   }
   cout << endl;
