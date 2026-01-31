@@ -3,40 +3,35 @@
 #include <string>
 using namespace std;
 
-bool is_palindrome(const string& text) {
-  stack<char>pa;
-  for (char c : text) pa.push(c);
-  for (char c : text) {
-    if (c != pa.top()) return false;
-    pa.pop();
-  }
-  return true;
-}
-
 int main( )
-/* Pre: The user supplies a line of text.
-Post: The characters are printed in reverse order.
+/* Pre: The user supplies a sequence of intergers.
+Post: The integers are printed in reverse order.
 Uses: The STL class stack and its methods */
 {
-  string text;
-  stack<char> characters; // declares and initializes a stack of characters
-  cout << " Type in a line of text." << endl
-        << " The characters will be printed in reverse order." << endl;
-  getline(cin, text);
+  double item;
+  bool check = true;
+  stack<double> numbers; // declares and initializes a stack of numbers
+  cout << " Type in a sequence of integers of increasing value." << endl
+        << " The interger will be printed in decreasing order." << endl;
 
-  if(is_palindrome(text)) {
-    cout << "Given string is a palindrome." << endl;
-  } else {
-    cout << "Given string is a normal text." << endl;
-  }
+  do {
+    cin >> item;
+    if(numbers.empty()) {
+      numbers.push(item);
+    } else if(item < numbers.top()) {
+      check = false;
+      cout << "Program ends!" << endl;
+    } else {
+      numbers.push(item);
+    }
+  } while(check);
 
-  for (int i = 0; i < text.length(); i++) {
-    characters.push(text[i]);
-  }
   cout << endl << endl;
-  while (!characters.empty( )) {
-    cout << characters.top( );
-    characters.pop( );
+  while (!numbers.empty()) {
+    cout << numbers.top( ) << " ";
+    numbers.pop();
   }
+
   cout << endl;
 }
+
