@@ -34,4 +34,3 @@ Uses: The STL class stack and its methods */
 
   cout << endl;
 }
-
