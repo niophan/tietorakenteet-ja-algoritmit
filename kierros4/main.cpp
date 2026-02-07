@@ -45,7 +45,7 @@ class Stack {
         return count == maxstack ? true : false;
       }
       int size() const { return count; }
-      // Version (c)
+      // 1.c
       friend Error_code copy_stack_c(Stack &dest, const Stack& source) {
         if (&dest == &source) return success;
         dest.count = source.count;
@@ -59,16 +59,14 @@ class Stack {
       int count;
       Stack_entry entry[maxstack];
 };
-
-
-// Version (a)
+// 1.a
 Error_code copy_stack_a(Stack& dest, const Stack&source) {
   if (&dest == &source) return success;
   dest = source;
   return success;
 }
 
-// Version (b)
+// 1.b
 Error_code copy_stack_b(Stack& dest, const Stack&source) {
   if( &dest == &source) return success;
   Stack s = source;
@@ -93,9 +91,57 @@ Error_code copy_stack_b(Stack& dest, const Stack&source) {
   return success;
 }
 
+// 2.a
+bool full(Stack &s) {
+  return s.full();
+}
+
+// 2.b  
+Error_code pop_top(Stack &s, Stack_entry &t) {
+  Stack_entry x;
+  if (s.empty()) {
+    return underflow;
+  }
+
+  s.top(x);
+  s.pop();
+  t = x;
+  return success;
+}
+
+// 2.c
+void clear(Stack &s) {
+  while(!s.empty()) {
+    s.pop();
+  }
+}
+
+// 2.d
+int size(Stack &s) {
+  return s.size();
+}
+
+// 2.e
+void delete_all(Stack &s, Stack_entry x) {
+  Stack d;
+  Stack_entry y;
+
+  while(!s.empty()) {
+    s.top(y);
+    s.pop();
+    if (y != x) {
+      d.push(y);
+    }
+  }
+
+  while(!d.empty()) {
+    d.top(y);
+    d.pop();
+    s.push(y);
+  }
+}
 
 typedef Error_code (*CopyFunc)(Stack&, const Stack&);
-
 void version_check(Stack& dest, Stack& source, CopyFunc copy_stack) {
   // Nearly full
   for (int i = 1; i <=9; i ++) {
@@ -136,10 +182,14 @@ void version_check(Stack& dest, Stack& source, CopyFunc copy_stack) {
   dest.clear();
 }
 
+
+
+
 int main() {
   Stack source, dest;
   //version_check(dest, source, copy_stack_a);
   //version_check(dest, source, copy_stack_b);
   version_check(dest, source, copy_stack_c);
+
 
 }
