@@ -12,11 +12,13 @@ char get_command()
       command = tolower(command);
       if (command == '?' || command == '=' || command == '+' ||
           command == '-' || command == '*' || command == '/' ||
-          command == 'x' || command == 'q' ) waiting = false;
+          command == 'x' || command == 's' || command == 'a' || command == 'q' ) waiting = false;
       else {
          cout << "Please enter a valid command:"   << endl
               << "[?]push to stack   [=]print top" << endl
               << "[+] [-] [*] [/]   are arithmetic operations" << endl
+              << "[x]change position between two values" << endl
+              << "[s]calculate the sum [a]compute average" << endl
               << "[Q]uit." << endl;
       }
    }
@@ -34,7 +36,7 @@ Uses: The class Stack.
 */
 
 {
-   double p, q;
+   double p, q, r, sum;
    switch (command) {
    case '?':
       cout << "Enter a real number: " << flush;
@@ -68,7 +70,6 @@ Uses: The class Stack.
       }
       break;
 
-   //   Add options for further user commands.
    case 'x':
       if (numbers.top(p) == underflow)
          cout << "Stack empty" << endl;
@@ -81,6 +82,7 @@ Uses: The class Stack.
             numbers.pop();
             numbers.push(p);
             numbers.push(q);
+            cout << "Position of the two topmost is changed" << endl;
          }
       }
       break;
@@ -101,7 +103,17 @@ Uses: The class Stack.
          }
       }
       break;
-   
+
+   case 's':
+      sum = 0;
+      while(!numbers.empty()) {
+         numbers.top(r);
+         sum += r;
+         numbers.pop();
+      }
+      cout << "Total sum of the stack is: " << sum << endl;
+      break;
+
    case 'q':
       cout << "Calculation finished.\n";
       return false;
