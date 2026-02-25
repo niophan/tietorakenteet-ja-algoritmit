@@ -36,7 +36,7 @@ Uses: The class Stack.
 */
 
 {
-   double p, q, r, sum;
+   double p, q, r, m, sum, average;
    switch (command) {
    case '?':
       cout << "Enter a real number: " << flush;
@@ -108,10 +108,24 @@ Uses: The class Stack.
       sum = 0;
       while(!numbers.empty()) {
          numbers.top(r);
-         sum += r;
          numbers.pop();
+         sum += r;
       }
-      cout << "Total sum of the stack is: " << sum << endl;
+      cout << "The sum of the stack is: " << sum << endl;
+      break;
+   
+   case 'a':
+      sum = 0;
+      m = 0;
+      average = 0;
+      while(!numbers.empty()) {
+         numbers.top(r);
+         numbers.pop();
+         sum += r;
+         m++;
+      }
+      average = sum / m;
+      cout << "Average of the stack is: " << average << endl;
       break;
 
    case 'q':
