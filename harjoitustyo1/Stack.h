@@ -16,7 +16,11 @@ Error_code copy_stack_c(Stack &dest, const Stack &source);
 class Stack {
   public:
       Stack() : count(0) {}
-      Stack(const Stack&) {}
+      Stack(const Stack& other) : count(other.count) {
+        for (int i = 0; i < count; i++) {
+          entry[i] = other.entry[i];
+        }
+      }
       Error_code pop() {
       Error_code outcome = success;
         if (count == 0)
