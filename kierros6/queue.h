@@ -86,4 +86,53 @@ Post: The front of the Queue retrieved to the output
    return success;
 }
 
+
+class Extended_queue : public Queue {
+public:
+   bool full() const;
+   int size() const;
+   void clear();
+   Error_code serve_and_retrieve(Queue_entry &item);
+};
+
+
+bool Extended_queue::full() const
+/*
+Post: Return true if the Queue is full, otherwise return false.
+*/
+{
+   return count >= maxqueue;
+}
+
+
+int Extended_queue::size() const
+/*
+Post: Return the number of entries in the Queue.
+*/
+{
+   return count;
+}
+
+
+void Extended_queue::clear()
+/*
+Post: All entries in the Queue are removed; it is now empty.
+*/
+{
+   count = 0;
+   rear = maxqueue - 1;
+   front = 0;
+}
+
+
+Error_code Extended_queue::serve_and_retrieve(Queue_entry &item)
+/*
+Post: The front of the Queue is retrieved to item and removed.
+      If the Queue is empty return an Error_code of underflow.
+*/
+{
+   if (retrieve(item) == underflow) return underflow;
+   return serve();
+}
+
 #endif
