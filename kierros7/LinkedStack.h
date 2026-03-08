@@ -7,7 +7,7 @@ typedef double Node_entry;
 
 class LinkedStack {
 public:
-    LinkedStack() : top_node(nullptr) {}
+  LinkedStack() : top_node(nullptr) {}
     
     ~LinkedStack() {
         while (top_node != nullptr) {
@@ -15,7 +15,10 @@ public:
             top_node = top_node->next;
             delete temp;
         }
+        count = 0;
     }
+
+    
     
     bool isEmpty() const {
         return top_node == nullptr;
@@ -48,6 +51,22 @@ public:
       return success;
     }
 
+    // Tehtävä 5a.
+    // int size() const {
+    //   int count = 0;
+    //   const Node *current = top_node;
+    //   while (current != nullptr) {
+    //       ++count;
+    //       current = current->next;
+    //   }
+    //   return count;
+    // }
+
+    // Tehtävä 5b
+    int size() const {
+      return count;
+    }
+
 private:
     struct Node {
       Node_entry entry;
@@ -57,6 +76,7 @@ private:
       Node(Node_entry item, Node *add_on = nullptr) : entry(item), next(add_on) {}
     };
     Node* top_node;
+    int count;
 };
 
 #endif
