@@ -100,8 +100,15 @@ public:
       return count;
    }
 
-   void clear();
-   Error_code serve_and_retrieve(Queue_entry &item);
+   void clear() {
+    while(!empty())
+        serve();
+   }
+
+   Error_code serve_and_retrieve(Queue_entry &item) {
+     if (retrieve(item) == underflow) return underflow;
+     return serve();
+   }
 };
 
 
