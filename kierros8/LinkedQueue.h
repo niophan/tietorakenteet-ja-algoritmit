@@ -78,4 +78,32 @@ class Queue {
     Node *front, *rear;
 };
 
+
+class Extended_queue : public Queue {
+public:
+   bool full() const {
+    Node *window = new Node;
+    if (window == nullptr) {
+      return true;
+    }
+    delete window;
+    return false;
+   }
+
+   int size() const {
+      Node *window = front;
+      int count = 0;
+      while (window != nullptr) {
+        window = window->next;
+        count++;
+      }
+      return count;
+   }
+
+   void clear();
+   Error_code serve_and_retrieve(Queue_entry &item);
+};
+
+
+
 #endif
