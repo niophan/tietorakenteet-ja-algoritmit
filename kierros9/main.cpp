@@ -42,8 +42,6 @@ void move(int count, int start, int finish, int temp,
   }
 }
 
-
-
 int main() {
 
   cout << "Tehtävä 1" << endl;
@@ -86,6 +84,5 @@ int main() {
     cout << endl;
     previous_time_ms = elapsed_ms;
   }
-
   return 0;
 }
