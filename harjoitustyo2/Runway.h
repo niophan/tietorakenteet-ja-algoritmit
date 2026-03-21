@@ -15,6 +15,7 @@ public:
    Error_code can_depart(const Plane &current);
    Runway_activity activity(int time, Plane &moving);
    void shut_down(int time) const;
+   void short_detail() const;
 
 private:
    Extended_queue landing;
@@ -181,5 +182,17 @@ Post: Runway usage statistics are summarized and printed.
         << (( float ) num_takeoff_requests) / (( float ) time)
         << " per time unit" << endl;
 }
+
+inline void Runway::short_detail() const{
+  cout << "Summary:\n";
+  cout << "Total number of planes that landed " << num_landings << endl;
+  cout << "Total number of planes that took off " << num_takeoffs << endl;
+  cout << "Total number of planes served " << (num_landings + num_takeoffs) << endl;
+  cout << "Total number of planes refused for landing " << num_land_refused << endl;
+  cout << "Total number of planes refused for takeoff " << num_takeoff_refused << endl;
+  cout << "Total number of planes left in landing queue " << landing.size() << endl;
+  cout << "Total number of planes left in takeoff queue " << takeoff_queue.size() << endl;
+}
+
 
 #endif
