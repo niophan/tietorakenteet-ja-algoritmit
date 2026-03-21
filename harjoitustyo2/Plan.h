@@ -22,7 +22,7 @@ private:
 };
 
 
-Plane::Plane(int flt, int time, Plane_status status)
+inline Plane::Plane(int flt, int time, Plane_status status)
 /*
 Post:  The Plane data members flt_num, clock_start,
        and state are set to the values of the parameters flt,
@@ -40,7 +40,7 @@ Post:  The Plane data members flt_num, clock_start,
       cout << "take off." << endl;
 }
 
-Plane::Plane()
+inline Plane::Plane()
 /*
 Post:  The Plane data members flt_num, clock_start,
        state are set to illegal default values.
@@ -52,7 +52,7 @@ Post:  The Plane data members flt_num, clock_start,
 }
 
 
-void Plane::refuse() const
+inline void Plane::refuse() const
 /*
 Post: Processes a Plane wanting to use Runway, when
       the Queue is full.
@@ -67,7 +67,7 @@ Post: Processes a Plane wanting to use Runway, when
 }
 
 
-void Plane::land(int time) const
+inline void Plane::land(int time) const
 /*
 Post: Processes a Plane that is landing at the specified time.
 */
@@ -80,7 +80,7 @@ Post: Processes a Plane that is landing at the specified time.
 }
 
 
-void Plane::fly(int time) const
+inline void Plane::fly(int time) const
 /*
 Post: Process a Plane that is taking off at the specified time.
 */
@@ -93,7 +93,7 @@ Post: Process a Plane that is taking off at the specified time.
 }
 
 
-int Plane::started() const
+inline int Plane::started() const
 /*
 Post: Return the time that the Plane entered the airport system.
 */

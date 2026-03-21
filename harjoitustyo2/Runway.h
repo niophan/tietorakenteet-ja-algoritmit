@@ -33,7 +33,7 @@ private:
    int idle_time;                //  total time runway is idle
 };
 
-Runway::Runway(int limit)
+inline Runway::Runway(int limit)
 /*
 Post:  The Runway data members are initialized to record no
        prior Runway use and to record the limit on queue sizes.
@@ -48,7 +48,7 @@ Post:  The Runway data members are initialized to record no
    land_wait = takeoff_wait = idle_time = 0;
 }
 
-Error_code Runway::can_land(const Plane &current)
+inline Error_code Runway::can_land(const Plane &current)
 /*
 Post:  If possible, the Plane current is added to the
        landing Queue; otherwise, an Error_code of overflow is
@@ -72,7 +72,7 @@ Uses:  class Extended_queue.
    return result;
 }
 
-Error_code Runway::can_depart(const Plane &current)
+inline Error_code Runway::can_depart(const Plane &current)
 /*
 Post:  If possible, the Plane current is added to the
        takeoff Queue; otherwise, an Error_code of overflow is
@@ -95,7 +95,7 @@ Uses:  class Extended_queue.
    return result;
 }
 
-Runway_activity Runway::activity(int time, Plane &moving)
+inline Runway_activity Runway::activity(int time, Plane &moving)
 /*
 Post:  If the landing Queue has entries, its front
        Plane is copied to the parameter moving
@@ -132,7 +132,7 @@ Uses:  class Extended_queue.
    return in_progress;
 }
 
-void Runway::shut_down(int time) const
+inline void Runway::shut_down(int time) const
 /*
 Post: Runway usage statistics are summarized and printed.
 */
