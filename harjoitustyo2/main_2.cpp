@@ -97,12 +97,16 @@ Uses: Classes Runway, Plane, Random and functions run_idle_p2, initialize_p2.
          break;
       case takeoff:
          break;
+      case crash:
+         break;
       case idle:
          run_idle_p2(current_time, "Landing");
       }
 
       switch (takeoff_runway.activity(current_time, moving_plane)) {
       case land:
+         break;
+      case crash:
          break;
       case takeoff:
          served_two_runway++;

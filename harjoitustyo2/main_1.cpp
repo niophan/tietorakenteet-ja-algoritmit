@@ -96,6 +96,8 @@ Uses: Classes Runway, Plane, Random and functions run_idle, initialize.
       case takeoff:
          moving_plane.fly(current_time);
          break;
+      case crash:
+         break;
       case idle:
          run_idle(current_time);
       }
