@@ -23,36 +23,40 @@ public:
    void traverse(void (*visit)(List_entry &));
    Error_code retrieve(int position, List_entry &x) const;
    Error_code replace(int position, const List_entry &x);
-   Error_code remove(int position,  List_entry &x) const;
+   Error_code remove(int position,  List_entry &x);
    ~List();
    List(const List<List_entry> &copy);
    List<List_entry> &operator =(const List<List_entry> &copy);
 protected:
 //  Data members for the linked list implementation now follow.
    int count;
+   mutable int current_position;
    Node<List_entry> *head;
+   mutable Node<List_entry> *current;
 
 //  The following auxiliary function is used to locate list positions
-   Node<List_entry> *set_position(int position) const;
+   void set_position(int position) const;
 };
 
 
 template <class List_entry>
-Node<List_entry> *List<List_entry>::set_position(int position) const
+void List<List_entry>::set_position(int position) const
 /*
-Pre:  position is a valid position in the List; 0 <= position < count.
-Post: Returns a pointer to the Node in position.
+Pre:  position is a valid position in the List: 0 <= position < count.
+Post: The current Node pointer references the Node at position.
 */
 {
-   Node<List_entry> *q = head;
-   for (int i = 0; i < position; i++)
-      q = q->next;
-   return q;
+   if (position < current_position) {  //  must start over at head of list
+      current_position = 0;
+      current = head;
+   }
+   for ( ; current_position != position; current_position++)
+      current = current->next;
 }
 
 template <class List_entry>
 List<List_entry>::List()
-    : count(0), head(nullptr)
+   : count(0), current_position(0), head(nullptr), current(nullptr)
 {
 }
 
@@ -170,7 +174,7 @@ Error_code List<List_entry>::retrieve(int position, List_entry &x) const
 
 
 template <class List_entry>
-Error_code List<List_entry>::remove(int position, List_entry &x) const
+Error_code List<List_entry>::remove(int position, List_entry &x)
 {
    if (position < 0 || position >= count)
       return range_error;
@@ -180,10 +184,14 @@ Error_code List<List_entry>::remove(int position, List_entry &x) const
    if (position == 0) {
       old_head = head;
       head = head->next;
+      current = head;
+      current_position = 0;
    } else {
-      Node<List_entry> *previous = set_position(position - 1);
-      old_head = previous->next;
-      previous->next = old_head->next;
+      set_position(position - 1);
+      old_head = current->next;
+      current->next = old_head->next;
+      current_position = position - 1;
+      current = current->next;
    }
 
    x = old_head->entry;
